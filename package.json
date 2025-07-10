@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
-   "build": "tsc --outDir src/dist"
+   "build": "tsc"
   },
   "author": "Baqir-Naqvi",
   "license": "ISC",
