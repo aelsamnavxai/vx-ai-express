@@ -1,13 +1,13 @@
-import { adminSDK, db } from '../config/firebase';
-import { getAuthenticatedOAuth2Client } from '../providers/shared';
-import { getKnowledgeBaseData } from '../queries/shared';
+import { adminSDK, db } from '../config/firebase.js';
+import { getAuthenticatedOAuth2Client } from '../providers/shared.js';
+import { getKnowledgeBaseData } from '../queries/shared.js';
 import { format } from 'date-fns';
-import { getThreadMessageId, sendGoogleEmail } from '../providers/google';
-import { getOutlookThreadMessageId, sendOutlookEmail } from '../providers/outlook'
-import { handleEmailSent } from '../queries/shared';
+import { getThreadMessageId, sendGoogleEmail } from '../providers/google.js';
+import { getOutlookThreadMessageId, sendOutlookEmail } from '../providers/outlook.js'
+import { handleEmailSent } from '../queries/shared.js';
 import {differenceInDays} from 'date-fns';
-import { generateEmail } from './agent';
-import { twilioClient, convertTwilioNumber } from '../utils/twilio';
+import { generateEmail } from './agent.js';
+import { twilioClient, convertTwilioNumber } from '../utils/twilio.js';
 
 const conversationsRef = db.collection('conversations');
 const leadsRef = db.collection('leads');

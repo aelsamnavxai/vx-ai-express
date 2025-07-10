@@ -1,7 +1,7 @@
-import express, { Application, Request, Response } from 'express';
+import express from 'express';
 import 'dotenv/config'; // Load environment variables from .env file
-import { scheduleDailyFollowUps } from './jobs/scheduler';
-import './jobs/followup-processor'; // Import to ensure the processor is registered
+import { scheduleDailyFollowUps } from './jobs/scheduler.js';
+import './jobs/followup-processor.js'; // Import to ensure the processor is registered
 
 const app = express();
 const port = process.env.PORT || 3000;

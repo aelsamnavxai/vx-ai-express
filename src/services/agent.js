@@ -1,7 +1,7 @@
-import { adminSDK } from "../config/firebase";
+import { adminSDK } from "../config/firebase.js";
 import OpenAI from 'openai';
 import Anthropic from "@anthropic-ai/sdk";
-import { followUpPrompt } from "../queries/prompts";
+import { followUpPrompt } from "../queries/prompts.js";
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY, // Ensure this is set in your environment variables
@@ -13,17 +13,17 @@ const anthropic = new Anthropic({
 });
 
 export const generateEmail = async (
-    senderName: string,
-    pastEmails: any,
-    emailBody: string,
-    knowledgeBase: any,
-    initialReply: string,
-    docs: any,
-    businessName: string,
-    bookTour: boolean,
-    additionalInstructions: string,
-    customAnswersbyBusiness: any[] = []
-): Promise<string> => {
+    senderName,
+    pastEmails,
+    emailBody,
+    knowledgeBase,
+    initialReply,
+    docs,
+    businessName,
+    bookTour,
+    additionalInstructions,
+    customAnswersbyBusiness= []
+)=> {
     try {
         //fetch prompt from firebase 'prompts' collection and 'sales-agent' document
         const docRef = adminSDK
@@ -186,7 +186,7 @@ export const generateEmail = async (
                     },
                 ],
             });
-            let response = msg.content[0] as any;
+            let response = msg.content[0]
 
             let generatedEmail = response.text;
             // let email = generatedEmail.replace(/<p>\s*(PS|P\.S\.).*?<\/p>/i, "").replace(/<p>\s*(P.S|P\.S\.).*?<\/p>/i, "")

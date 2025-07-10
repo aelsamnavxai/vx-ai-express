@@ -1,9 +1,9 @@
 
 import { google } from "googleapis";
-import { db } from "../config/firebase";
-import { handleErrorLogging } from "../utils/index";
-import { refreshOutlookAccessToken, revokeOutlookToken } from "./outlook";
-import { revokeGoogleToken } from "./google";
+import { db } from "../config/firebase.js";
+import { handleErrorLogging } from "../utils/index.js";
+import { refreshOutlookAccessToken, revokeOutlookToken } from "./outlook.js";
+import { revokeGoogleToken } from "./google.js";
 
 
 export const getAuthenticatedOAuth2Client = async (businessId) => {

@@ -1,4 +1,4 @@
-import { createFollowUpQueue } from '../config/redis';
+import { createFollowUpQueue } from '../config/redis.js';
 import schedule from 'node-schedule';
 
 const followUpQueue = createFollowUpQueue();

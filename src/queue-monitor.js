@@ -1,7 +1,7 @@
 import { ExpressAdapter } from '@bull-board/express';
 import { createBullBoard } from '@bull-board/api';
 import { BullAdapter } from '@bull-board/api/bullAdapter';
-import { createFollowUpQueue } from './config/redis';
+import { createFollowUpQueue } from './config/redis.js';
 import express from 'express';
 
 const queue = createFollowUpQueue();

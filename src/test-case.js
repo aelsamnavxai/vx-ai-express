@@ -1,4 +1,4 @@
-import { createFollowUpQueue } from './config/redis';
+import { createFollowUpQueue } from './config/redis.js';
 import { processDailyFollowUps } from './services/followup-service';
 
 const followUpQueue = createFollowUpQueue();

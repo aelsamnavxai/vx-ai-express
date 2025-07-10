@@ -1,7 +1,6 @@
 
-import { db,adminSDK } from "../config/firebase";
-import { Timestamp } from "firebase-admin/firestore";
-import { handleErrorLogging } from "../utils";
+import { db, adminSDK } from "../config/firebase.js";
+import { handleErrorLogging } from "../utils/index.js";
 
 
 export async function getKnowledgeBaseData(businessId){
