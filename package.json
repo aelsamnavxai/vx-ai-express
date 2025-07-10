@@ -4,9 +4,9 @@
   "description": "express server to handle cron jobs and other queued tasks",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "node src/dist/index.js",
     "dev": "nodemon src/index.ts",
-    "build": "tsc"
+   "build": "tsc --outDir src/dist"
   },
   "author": "Baqir-Naqvi",
   "license": "ISC",
