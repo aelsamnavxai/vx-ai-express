@@ -2,11 +2,10 @@
   "name": "vx-ai-express",
   "version": "1.0.0",
   "description": "express server to handle cron jobs and other queued tasks",
-  "main": "index.ts",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts",
-    "build": "tsc"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "author": "Baqir-Naqvi",
   "license": "ISC",
@@ -28,12 +27,6 @@
     "twilio": "^5.7.3"
   },
   "devDependencies": {
-    "@types/dotenv": "^6.1.1",
-    "@types/express": "^5.0.3",
-    "@types/node": "^24.0.12",
-    "@types/node-schedule": "^2.1.7",
-    "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "nodemon": "^3.1.10"
   }
 }
