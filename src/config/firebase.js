@@ -1,5 +1,6 @@
 import admin from 'firebase-admin';
-
+import dotenv from 'dotenv';
+dotenv.config(); // Load environment variables from .env file
 
 // Initialize Firebase Admin SDK
 const initializeFirebase = () => {
@@ -14,7 +15,7 @@ const initializeFirebase = () => {
             storageBucket: "vx-ai-a7407.firebasestorage.app"
         });
 
-        const databaseName = process.env.NODE_ENV === 'production' ? '(default)' : 'development';
+        const databaseName = process.env.DATABASE || 'development';
         const firestore = app.firestore();
 
         console.log(`Firebase initialized with database: ${databaseName}`);

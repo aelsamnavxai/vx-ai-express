@@ -11,7 +11,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Start the daily follow-up scheduler
-scheduleDailyFollowUps();
+if(process.env.NODE_ENV === 'production') {
+    scheduleDailyFollowUps();
+}
 
 app.get('/', async (req, res)=> {
     return res.status(200).send({

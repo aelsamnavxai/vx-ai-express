@@ -212,7 +212,7 @@ const processSingleFollowUp = async ({
 }) => {
 
     const { businessId, businessEmail, auth, aiSettings } = business;
-
+    let leadId= leadData.id;
     const { followUpTemplates, signature } = aiSettings;
 
     const {
@@ -364,7 +364,7 @@ const processSingleFollowUp = async ({
         const firstName = _name.charAt(0).toUpperCase() + _name.slice(1);
 
         //if no content is found, we will not send any follow up emails
-
+        const calendarLink = `https://app.venuexai.com/book-appointment/${businessId}?lead-id=${leadId}&extended=false`
         if (provider === "google") {
             let isOngoingThread = true;
 
@@ -389,7 +389,7 @@ const processSingleFollowUp = async ({
                   <p>${emailBody} </p>
                   <p>${signature ? signature : ""}</p>
                   <p>PS – If you'd like to see our venue in person, you can schedule a tour by
-                <a href="https://app.venuexai.com/book-appointment/${businessId}">clicking here</a> at your convenience. </p>
+                <a href="${calendarLink}">clicking here</a> at your convenience. </p>
                 </div>\n`,
                 customLabel: "Follow Up",
             });
@@ -406,7 +406,7 @@ const processSingleFollowUp = async ({
                   <p> ${emailBody}</p> 
                   <p>${signature ? signature : ""}</p>
                   <p>PS – If you'd like to see our venue in person, you can schedule a tour by
-                <a href="https://app.venuexai.com/book-appointment/${businessId}">clicking here</a> at your convenience. </p>
+                <a href="${calendarLink}">clicking here</a> at your convenience. </p>
                 </div>\n`,
                 customLabel: "Follow Up",
                 messageId: messageID,

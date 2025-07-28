@@ -9,6 +9,7 @@
   },
   "author": "Baqir-Naqvi",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.56.0",
     "@bull-board/express": "^6.11.0",
@@ -22,6 +23,7 @@
     "express": "^5.1.0",
     "firebase-admin": "^13.4.0",
     "googleapis": "^152.0.0",
+    "luxon": "^3.7.1",
     "node-schedule": "^2.1.1",
     "openai": "^5.8.3",
     "twilio": "^5.7.3"

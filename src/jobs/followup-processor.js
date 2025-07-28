@@ -1,25 +1,28 @@
 import { createFollowUpQueue } from '../config/redis.js';
 import { processDailyFollowUps } from '../services/followup-service.js';
 
-const followUpQueue = createFollowUpQueue();
 
-followUpQueue.process('process-follow-ups', async (job) => {
-    console.log('🔧 Processing daily follow-ups job');
-    await processDailyFollowUps();
-    console.log('✅ Completed daily follow-ups');
-});
+if (process.env.NODE_ENV == 'production') {
 
-followUpQueue.on('failed', (job, err) => {
-    console.error('❌ Job failed:', job?.id, err);
-});
+    const followUpQueue = createFollowUpQueue();
+    followUpQueue.process('process-follow-ups', async (job) => {
+        console.log('🔧 Processing daily follow-ups job');
+        await processDailyFollowUps();
+        console.log('✅ Completed daily follow-ups');
+    });
 
-// Add this to your worker startup
-followUpQueue.on('error', (err) => {
-    console.error('QUEUE ERROR:', err);
-});
+    followUpQueue.on('failed', (job, err) => {
+        console.error('❌ Job failed:', job?.id, err);
+    });
 
-followUpQueue.on('failed', (job, err) => {
-    console.error(`JOB ${job.id} FAILED:`, err);
-});
+    // Add this to your worker startup
+    followUpQueue.on('error', (err) => {
+        console.error('QUEUE ERROR:', err);
+    });
 
-console.log('🚀 Worker ready for followups')
+    followUpQueue.on('failed', (job, err) => {
+        console.error(`JOB ${job.id} FAILED:`, err);
+    });
+
+    console.log('🚀 Worker ready for followups')
+}
