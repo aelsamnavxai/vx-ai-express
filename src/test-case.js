@@ -950,57 +950,57 @@ const extractZolaEmail = async (emailBody) => {
 
 
 
-try {
-  const businessId = 'UUSHdF92KjYpVf3Xo3bP'
-  const knowledgebase = await getKnowledgeBaseData(businessId);
-  const { availableDates } =
-    knowledgebase;
-  const pastEmails = []
-  const emailData = `what other dates do you have available in October 2026? Also is January 1 2026 open?`
+// try {
+//   const businessId = 'UUSHdF92KjYpVf3Xo3bP'
+//   const knowledgebase = await getKnowledgeBaseData(businessId);
+//   const { availableDates } =
+//     knowledgebase;
+//   const pastEmails = []
+//   const emailData = `what other dates do you have available in October 2026? Also is January 1 2026 open?`
 
-  // const datesFormat: string = availableDates.map((date: string) => date.split("T")[0]).join(', ')
-  const eventBlocksRef = adminSDK.firestore().collection("knowledgebase").doc(businessId).collection("eventBlocks")
-  const eventBlocksSnapshot = await eventBlocksRef.get();
+//   // const datesFormat: string = availableDates.map((date: string) => date.split("T")[0]).join(', ')
+//   const eventBlocksRef = adminSDK.firestore().collection("knowledgebase").doc(businessId).collection("eventBlocks")
+//   const eventBlocksSnapshot = await eventBlocksRef.get();
 
-  const eventBlocksData = eventBlocksSnapshot.docs.map((doc) => {
-    const data = doc.data();
-    return {
-      id: doc.id,
-      name: data.name || "",
-      startTime: data.startTime || null,
-      endTime: data.endTime || null,
-    };
-  })
+//   const eventBlocksData = eventBlocksSnapshot.docs.map((doc) => {
+//     const data = doc.data();
+//     return {
+//       id: doc.id,
+//       name: data.name || "",
+//       startTime: data.startTime || null,
+//       endTime: data.endTime || null,
+//     };
+//   })
 
-  let availableDatesYYMMDD = []
-  const format_availableDates = availableDates.sort(
-    (a, b) =>
-      new Date(a.date).getTime() - new Date(b.date).getTime()
-  ).map(
-    (dateItem) => {
-      // const date = new Date(dateItem.date);
-      const isoDate = new Date(dateItem.date).toISOString();
-      const date = new Date(isoDate.split("T")[0] + "T12:00:00.000Z");
+//   let availableDatesYYMMDD = []
+//   const format_availableDates = availableDates.sort(
+//     (a, b) =>
+//       new Date(a.date).getTime() - new Date(b.date).getTime()
+//   ).map(
+//     (dateItem) => {
+//       // const date = new Date(dateItem.date);
+//       const isoDate = new Date(dateItem.date).toISOString();
+//       const date = new Date(isoDate.split("T")[0] + "T12:00:00.000Z");
 
-      // const formattedDate = format(date, "do MMMM yyyy")
-      const formattedDate = format(date, "EEEE, MMMM do, yyyy");
-      const YYMMDD = format(date, "yyyy-MM-dd")
-      availableDatesYYMMDD.push(YYMMDD);
-      const blocks = dateItem.blocks.map((blockId) => {
-        const block = eventBlocksData.find((b) => b.id === blockId);
-        return block ? `${block.name} (${block.startTime} - ${block.endTime})` : "";
-      });
-      return `${formattedDate} ${blocks?.length > 0 ? `- ${blocks.join(", ")}` : ""}`;
-    }
-  );
+//       // const formattedDate = format(date, "do MMMM yyyy")
+//       const formattedDate = format(date, "EEEE, MMMM do, yyyy");
+//       const YYMMDD = format(date, "yyyy-MM-dd")
+//       availableDatesYYMMDD.push(YYMMDD);
+//       const blocks = dateItem.blocks.map((blockId) => {
+//         const block = eventBlocksData.find((b) => b.id === blockId);
+//         return block ? `${block.name} (${block.startTime} - ${block.endTime})` : "";
+//       });
+//       return `${formattedDate} ${blocks?.length > 0 ? `- ${blocks.join(", ")}` : ""}`;
+//     }
+//   );
 
-  const res = await checkDatesAvailablity(pastEmails, emailData, format_availableDates);
-  console.log("Response from checkDatesAvailablity:", res);
+//   const res = await checkDatesAvailablity(pastEmails, emailData, format_availableDates);
+//   console.log("Response from checkDatesAvailablity:", res);
   
 
-  // console.log("Response from checkDatesAvailablity:", res);
+//   // console.log("Response from checkDatesAvailablity:", res);
 
 
-} catch (error) {
-  console.error("Error in main execution:", error);
-}
+// } catch (error) {
+//   console.error("Error in main execution:", error);
+// }
