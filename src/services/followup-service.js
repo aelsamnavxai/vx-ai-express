@@ -70,6 +70,7 @@ export const processDailyFollowUps = async () => {
     // 2. Process each business sequentially
     for (const businessDoc of businesses.docs) {
         const business = businessDoc.data();
+        console.log(`Processing business: ${business.name}`);
 
         try {
             let oauth2Client = null;
@@ -81,7 +82,7 @@ export const processDailyFollowUps = async () => {
                     "No connected inbox for this business",
                     business.businessEmail
                 );
-                return;
+                continue; // Skip to the next business if no auth is available
             }
             const { businessId, businessEmail, auth, aiSettings } = business;
 
@@ -106,7 +107,7 @@ export const processDailyFollowUps = async () => {
             // if there are no leads to follow up, we will continue to the next business
             if (leads.empty) {
                 console.log("No leads to follow up");
-                return;
+                continue;
             }
 
             console.log("Leads to follow up", leads.docs.length);
@@ -166,7 +167,7 @@ export const processDailyFollowUps = async () => {
                 provider = connectedProvider
             } catch (error) {
                 console.log("Error getting authenticated oauth2 client", error);
-                return;
+                continue; // Skip to the next business if authentication fails
             }
       
 
@@ -191,12 +192,14 @@ export const processDailyFollowUps = async () => {
                 } catch (error) {
                     console.error(`Error processing lead ${lead.id}:`, error);
                     // Continue with next lead
+                    continue;
                 }
                
             }
         } catch (error) {
             console.error(`Error processing business ${business.id}:`, error);
             // Continue with next business
+            continue;
         }
     }
 };

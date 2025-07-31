@@ -194,6 +194,11 @@ const checkDatesAvailablity = async (pastEmails = [], emailBody = "Hi, do you ha
             * Do not suggest any dates on your own or from your knowledge.
             * Do not hallucinate any dates.
             * Strictly follow the dates provided in the <availableDates> list.
+            * If any of the date requested by the lead is available in the knowledgebase then isAvailable will be true, otherwise false.
+            * If a lead asks for an X range of dates and any of the dates in that range is available in the knowledgebase then isAvailable will be true, otherwise false.
+            * If a lead asks for a month and any of the dates in that month is available in the knowledgebase then isAvailable will be true, otherwise false.
+            * A lead may ask for dates of different months e.g dates in October, January and May, provide dates of each month in the output.
+            * Do not hallucinate or skip dates that are in the availableDates list.
              
             
             The available dates will be an array of strings in understandable format and some might have blocks in them.
@@ -496,7 +501,7 @@ const fetchBlockedOpenDates = async (
 };
 
 
-//
+// Agent Booking Function
 const checkForBooking = async ({
   emailData,
   schedule,
@@ -852,792 +857,150 @@ const checkForBooking = async ({
   }
 };
 
-
-// try {
-//   const businessId = '0joktYHnlqGAbLSeqphy'
-//   const businessData = await getBusinessDetails(businessId);
-//   const pastEmails = []
-// //   const emailData = `
-// // Please make a booking for Next Tuesday 7:30 pm`
-
-// const emailData =`
-// Email received body: body, html {
-
-//         font-family: Roboto, Helvetica, Arial, sans-serif;
-
-//       }
-
-
-
-//       body {
-
-//         margin: 0;
-
-//         padding: 0;
-
-//         -webkit-font-smoothing: antialiased;
-
-//         -webkit-text-size-adjust: 100%;
-
-//         -ms-text-size-adjust: 100%;
-
-//       }
-
-
-
-//       #outlook a {
-
-//         padding: 0;
-
-//       }
-
-
-
-//       .ReadMsgBody {
-
-//         width: 100%;
-
-//       }
-
-
-
-//       .ExternalClass {
-
-//         width: 100%;
-
-//       }
-
-
-
-//       .ExternalClass * {
-
-//         line-height: 100%;
-
-//       }
-
-
-
-//       table,
-
-//       td {
-
-//         mso-table-lspace: 0pt;
-
-//         mso-table-rspace: 0pt;
-
-//       }
-
-
-
-//       img {
-
-//         border: 0;
-
-//         height: auto;
-
-//         line-height: 100%;
-
-//         outline: none;
-
-//         text-decoration: none;
-
-//         -ms-interpolation-mode: bicubic;
-
-//       }
-
-
-
-//       p {
-
-//         display: block;
-
-//         margin: 13px 0;
-
-//       }
-
-    
-
-    
-
-    
-
-//       @media only screen and (max-width:580px) {
-
-//         @-ms-viewport {
-
-//           width: 320px;
-
-//         }
-
-
-
-//         @viewport {
-
-//           width: 320px;
-
-//         }
-
-//       }
-
-    
-
-    
-
-    
-
-          
-
-          
-
-            
-
-//             96
-
-          
-
-          
-
-          
-
-    
-
-          
-
-//             .outlook-group-fix { width:100% !important; }
-
-          
-
-    
-
-
-
-    
-
-//   body, html {font-family:Roboto,Helvetica,Arial,sans-serif;}@font-face {
-
-//   font-family: 'Roboto';
-
-//   font-style: normal;
-
-//   font-weight: 400;
-
-//   src: url(//fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxP.ttf) format('truetype');
-
-// }
-
-// @font-face {
-
-//   font-family: 'Roboto';
-
-//   font-style: normal;
-
-//   font-weight: 500;
-
-//   src: url(//fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmEU9fBBc9.ttf) format('truetype');
-
-// }
-
-// @font-face {
-
-//   font-family: 'Roboto';
-
-//   font-style: normal;
-
-//   font-weight: 700;
-
-//   src: url(//fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmWUlfBBc9.ttf) format('truetype');
-
-// }
-
-// @font-face {
-
-//   font-family: 'Material Icons Extended';
-
-//   font-style: normal;
-
-//   font-weight: 400;
-
-//   src: url(//fonts.gstatic.com/s/materialiconsextended/v152/kJEjBvgX7BgnkSrUwT8UnLVc38YydejYY-oE_LvM.ttf) format('truetype');
-
-// }
-
-// @font-face {
-
-//   font-family: 'Google Material Icons';
-
-//   font-style: normal;
-
-//   font-weight: 400;
-
-//   src: url(//fonts.gstatic.com/s/googlematerialicons/v144/Gw6kwdfw6UnXLJCcmafZyFRXb3BL9rvi0QZG3g.otf) format('opentype');
-
-// }
-
-
-
-// .google-material-icons {
-
-//   font-family: 'Google Material Icons';
-
-//   font-weight: normal;
-
-//   font-style: normal;
-
-//   font-size: 24px;
-
-//   line-height: 1;
-
-//   letter-spacing: normal;
-
-//   text-transform: none;
-
-//   display: inline-block;
-
-//   white-space: nowrap;
-
-//   word-wrap: normal;
-
-//   direction: ltr;
-
-// }
-
-// @font-face {
-
-//   font-family: 'Google Material Icons Filled';
-
-//   font-style: normal;
-
-//   font-weight: 400;
-
-//   src: url(//fonts.gstatic.com/s/googlematerialiconsfilled/v118/WWXFlimHYg6HKI3TavMkbKdhBmDvgach8TVpeGsuueSZJH4.otf) format('opentype');
-
-// }
-
-
-
-// .google-material-icons-filled {
-
-//   font-family: 'Google Material Icons Filled';
-
-//   font-weight: normal;
-
-//   font-style: normal;
-
-//   font-size: 24px;
-
-//   line-height: 1;
-
-//   letter-spacing: normal;
-
-//   text-transform: none;
-
-//   display: inline-block;
-
-//   white-space: nowrap;
-
-//   word-wrap: normal;
-
-//   direction: ltr;
-
-// }
-
-// @font-face {
-
-//   font-family: 'Google Sans';
-
-//   font-style: normal;
-
-//   font-weight: 400;
-
-//   src: url(//fonts.gstatic.com/s/googlesans/v14/4UaGrENHsxJlGDuGo1OIlL3Owps.ttf) format('truetype');
-
-// }
-
-// @font-face {
-
-//   font-family: 'Google Sans';
-
-//   font-style: normal;
-
-//   font-weight: 500;
-
-//   src: url(//fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLU94YtzCwM.ttf) format('truetype');
-
-// }
-
-// @font-face {
-
-//   font-family: 'Google Sans';
-
-//   font-style: normal;
-
-//   font-weight: 700;
-
-//   src: url(//fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLV154tzCwM.ttf) format('truetype');
-
-// }
-
-
-
-      
-
-//         .body-container {
-
-//           padding-left: 16px;
-
-//           padding-right: 16px;
-
-//         }
-
-      
-
+// Extract Zola Email from Email Body using DeepSeek API
+const extractZolaEmail = async (emailBody) => {
+  try {
+    const data = JSON.stringify({
+      "messages": [
+        {
+          "role": "system",
+          "content": `
+          You are an AI assistant responsible for monitoring a shared inbox to identify incoming emails that may be potential leads.
+          Your task is to extract the lead email address from the email body. You are responsible for handling all the emails that are from Zola.
+          Zola is a wedding planning platform that helps couples plan their weddings. The lead email address will be inside the email body or in the email headers somewhere.
+          You need to carefully read the email body and extract the lead email address.
+          Usually the lead emails address start with : 
+          -> 'msg-' followed by a radom string of characters and ends with '@zola.com'.
+          -> 'connect-' followed by a radom string of characters and ends with '@zola.com'.
+        
+          There could be a case where a lead has mentioned their personal email address in the email body, so you need to extract that as well.
+          So we will extract two emails, one is the Zola email address and the other is the personal email address.
+
+          Zola Email address is mandatory and personal email address is optional.
+          Example of Zola email address: 
+          -> msg-227bf1bb-4def-4732-a0d1-e425c6f1a877@vmkt-message.zola.com
+          -> connect-8ad89238-42e1-4fe4-8ead-3af1991406d9@vmkt-message.zola.com
+
+          Example of personal email address:
+          johndoe@gmail.com
+
+          The output should be in JSON format with the following keys:
+          {
+            "zolaEmail": "msg-227bf1bb-4def-4732-a0d1-e425c6f1a877@vmkt-message.zola.com",
+            "personalEmail": "johndoe@gmail.com" [ If provided in the email body ]
+          }
+          `
+        },
+        {
+          "role": "user",
+          "content": `<emailBody> ${emailBody} </emailBody>`
+        }
+      ],
+      "model": "deepseek-chat",
+      "frequency_penalty": 0,
+      "max_tokens": 2048,
+      "presence_penalty": 0,
+      "response_format": {
+        "type": "json_object"
+      },
+      "stop": null,
+      "stream": false,
+      "stream_options": null,
+      "temperature": 1,
+      "top_p": 1,
+      "tools": null,
+      "tool_choice": "none",
+      "logprobs": false,
+      "top_logprobs": null
+    });
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'https://api.deepseek.com/chat/completions',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer sk-16f8c0dd70dc435ea9e9678031eb62f9'
+      },
+      data: data
+    };
+    const response = await axios.request(config);
+    if (response.status !== 200) {
+      throw new Error(`DeepSeek API error: ${response.statusText}`);
+    }
+    const data_ = response.data;
+    const result = data_.choices[0].message.content;
+    const emailData = JSON.parse(result);
+
+    console.log("Extracted Zola Email Data:", emailData);
+    return {
+      zolaEmail: emailData.zolaEmail || "",
+      personalEmail: emailData.personalEmail || ""
+    };
+  }
+  catch (error) {
+    console.error("Error extracting Zola email:", error);
+    return {
+      zolaEmail: "",
+      personalEmail: ""
+    };
+  }
+}
+
+
+
+
+try {
+  const businessId = 'UUSHdF92KjYpVf3Xo3bP'
+  const knowledgebase = await getKnowledgeBaseData(businessId);
+  const { availableDates } =
+    knowledgebase;
+  const pastEmails = []
+  const emailData = `what other dates do you have available in October 2026? Also is January 1 2026 open?`
+
+  // const datesFormat: string = availableDates.map((date: string) => date.split("T")[0]).join(', ')
+  const eventBlocksRef = adminSDK.firestore().collection("knowledgebase").doc(businessId).collection("eventBlocks")
+  const eventBlocksSnapshot = await eventBlocksRef.get();
+
+  const eventBlocksData = eventBlocksSnapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      name: data.name || "",
+      startTime: data.startTime || null,
+      endTime: data.endTime || null,
+    };
+  })
+
+  let availableDatesYYMMDD = []
+  const format_availableDates = availableDates.sort(
+    (a, b) =>
+      new Date(a.date).getTime() - new Date(b.date).getTime()
+  ).map(
+    (dateItem) => {
+      // const date = new Date(dateItem.date);
+      const isoDate = new Date(dateItem.date).toISOString();
+      const date = new Date(isoDate.split("T")[0] + "T12:00:00.000Z");
+
+      // const formattedDate = format(date, "do MMMM yyyy")
+      const formattedDate = format(date, "EEEE, MMMM do, yyyy");
+      const YYMMDD = format(date, "yyyy-MM-dd")
+      availableDatesYYMMDD.push(YYMMDD);
+      const blocks = dateItem.blocks.map((blockId) => {
+        const block = eventBlocksData.find((b) => b.id === blockId);
+        return block ? `${block.name} (${block.startTime} - ${block.endTime})` : "";
+      });
+      return `${formattedDate} ${blocks?.length > 0 ? `- ${blocks.join(", ")}` : ""}`;
+    }
+  );
+
+  const res = await checkDatesAvailablity(pastEmails, emailData, format_availableDates);
+  console.log("Response from checkDatesAvailablity:", res);
   
 
-      
+  // console.log("Response from checkDatesAvailablity:", res);
 
-//         u+.body .body-container,
 
-//         body[data-outlook-cycle] .body-container,
-
-//         #MessageViewBody .body-container {
-
-//           padding-left: 0;
-
-//           padding-right: 0;
-
-//         }
-
-      
-
-  
-
-    
-
-//       @media only screen and (min-width:580px) {
-
-//         .column-per-37 {
-
-//           width: 37% !important;
-
-//           max-width: 37%;
-
-//         }
-
-
-
-//         .column-per-63 {
-
-//           width: 63% !important;
-
-//           max-width: 63%;
-
-//         }
-
-//       }
-
-    
-
-  
-
-    
-
-//       .appointment-buttons th {
-
-//         display: block;
-
-//         clear: both;
-
-//         float: left;
-
-//         margin-top: 12px;
-
-//       }
-
-
-
-//       .appointment-buttons th a {
-
-//         float: left;
-
-//       }
-
-
-
-//       #MessageViewBody .appointment-buttons th {
-
-//        margin-top: 24px;
-
-//       }
-
-    
-
-  
-
-    
-
-//       @media only screen and (max-width:580px) {
-
-//         table.full-width-mobile {
-
-//           width: 100% !important;
-
-//         }
-
-
-
-//         td.full-width-mobile {
-
-//           width: auto !important;
-
-//         }
-
-//       }
-
-    
-
-    
-
-//       .main-container-inner,
-
-//       .info-bar-inner {
-
-//         padding: 12px 16px !important;
-
-//       }
-
-
-
-//       .main-column-table-ltr {
-
-//         padding-right: 0 !important;
-
-//       }
-
-
-
-//       .main-column-table-rtl {
-
-//         padding-left: 0 !important;
-
-//       }
-
-
-
-//       @media only screen and (min-width:580px) {
-
-//         .main-container-inner {
-
-//           padding: 24px 32px !important;
-
-//         }
-
-
-
-//         .info-bar-inner {
-
-//           padding: 12px 32px !important;
-
-//         }
-
-
-
-//         .main-column-table-ltr {
-
-//           padding-right: 32px !important;
-
-//         }
-
-
-
-//         .main-column-table-rtl {
-
-//           padding-left: 32px !important;
-
-//         }
-
-
-
-//         .appointment-buttons th {
-
-//           display: table-cell;
-
-//           clear: none;
-
-//         }
-
-//       }
-
-
-
-//       .primary-text {
-
-//         color: #3c4043 !important;
-
-//       }
-
-
-
-//       .secondary-text,
-
-//       .phone-number a {
-
-//         color: #70757a !important;
-
-//       }
-
-
-
-//       .accent-text {
-
-//         color: #1a73e8 !important;
-
-//       }
-
-
-
-//       .accent-text-dark {
-
-//         color: #185abc !important;
-
-//       }
-
-
-
-//       .grey-button-text,
-
-//       .attachment-chip a {
-
-//         color: #5f6368 !important;
-
-//       }
-
-
-
-//       .primary-button {
-
-//         background-color: #1a73e8 !important;
-
-//       }
-
-
-
-//       .primary-button-text {
-
-//         color: #fff !important;
-
-//       }
-
-
-
-//       .underline-on-hover:hover {
-
-//         text-decoration: underline !important;
-
-//       }
-
-
-
-//       .grey-infobar-text {
-
-//         color: #202124 !important;
-
-//       }
-
-
-
-//       @media (prefers-color-scheme: dark) {
-
-//         .primary-text:not([class^="x_"]) {
-
-//           color: #e8eaed !important;
-
-//         }
-
-
-
-//         .secondary-text:not([class^="x_"]),
-
-//         .phone-number:not([class^="x_"]) a {
-
-//           color: #9aa0a6 !important;
-
-//         }
-
-
-
-//         .grey-button-text:not([class^="x_"]),
-
-//         .attachment-chip:not([class^="x_"]) a {
-
-//           color: #bdc1c6 !important;
-
-//         }
-
-
-
-//         .accent-text:not([class^="x_"]),
-
-//         .hairline-button-text:not([class^="x_"]) {
-
-//           color: #8ab4f8 !important;
-
-//         }
-
-
-
-//         .primary-button:not([class^="x_"]) {
-
-//           background-color: #8ab4f8 !important;
-
-//         }
-
-
-
-//         .primary-button-text:not([class^="x_"]) {
-
-//           color: #202124 !important;
-
-//         }
-
-//       }
-
-    
-
-    
-
-//       @media (prefers-color-scheme: dark) {
-
-//         .cse-banner:not([class^="x_"]) {
-
-//           background-color: #3c4043 !important; /* Google Grey 800 */
-
-//         }
-
-
-
-//         .encryption-icon:not([class^="x_"]) {
-
-//           /* WARNING: This causes the whole style tag to get stripped in Gmail. */
-
-//           background-image: url('https://fonts.gstatic.com/s/i/googlematerialiconsfilled/encrypted/v3/gm_grey200-24dp/2x/gm_filled_encrypted_gm_grey200_24dp.png') !important;
-
-//         }
-
-//       }
-
-    
-
-    
-
-    
-
-//       .prevent-link a {
-
-//         color: inherit !important;
-
-//         text-decoration: none !important;
-
-//         font-size: inherit !important;
-
-//         font-family: inherit !important;
-
-//         font-weight: inherit !important;
-
-//         line-height: inherit !important;
-
-//       }
-
-    
-
-    
-
-
-
-    
-
-      
-
-//         .main-container-inner {
-
-//           padding: 24px 32px !important;
-
-//         }
-
-
-
-//         .info-bar-inner {
-
-//           padding: 12px 32px !important;
-
-//         }
-
-
-
-//         .cse-banner .encryption-icon {
-
-//           /* We use the IE workaround instead. */
-
-//           background-image: none !important;
-
-//         }
-
-
-
-//         .cse-banner .encryption-icon .ms-fallback {
-
-//           display: block !important;
-
-//         }
-
-
-
-//         /* NB: Some MS clients ignore dark-scheme styling and apply their own, so there's nothing we can do to help there. */
-
-//         @media (prefers-color-scheme: dark) {
-
-//           .cse-banner:not([class^="x_"]) .encryption-icon .ms-fallback {
-
-//             display: none !important;
-
-//           }
-
-
-
-//           .cse-banner:not([class^="x_"]) .encryption-icon .ms-fallback-dark {
-
-//             display: block !important;
-
-//           }
-
-//         }
-
-      
-
-    
-
-//   Appointment with Regency Garden &nbsp; Andrew Mageo has accepted this invitation. &nbsp; WhenTuesday Jul 29, 2025 ⋅ 7:30pm – 8:15pm (Mountain Time - Denver)Organizerinfo@regencygarden.comGuestsAndrew MageoView all guest infoInvitation from Google CalendarYou are receiving this email because you are subscribed to calendar notifications. To stop receiving these emails, go to Calendar settings, select this calendar, and change "Other notifications".Forwarding this invitation could allow any recipient to send a response to the organizer, be added to the guest list, invite others regardless of their own invitation status, or modify your RSVP. Learn more
-// `
-
-//   const { schedule, appointmentDuration, bookedAppointments, timeZone, maxAppointments } = businessData;
-
-//   const res = await checkForBooking({
-//     emailData,
-//     schedule,
-//     appointmentDuration,
-//     bookedAppointments,
-//     timeZone,
-//     maxAppointments,
-//     pastEmails,
-//     blockedDates: []
-//   });
-
-//   // console.log("Booking response:", res);
-
-  
-
-//   // console.log("Response from checkDatesAvailablity:", res);
-
-
-// } catch (error) {
-//   console.error("Error in main execution:", error);
-// }
+} catch (error) {
+  console.error("Error in main execution:", error);
+}
